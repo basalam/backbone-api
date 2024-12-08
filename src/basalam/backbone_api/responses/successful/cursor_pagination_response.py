@@ -1,14 +1,11 @@
 import base64
 import json
-from typing import Generic, TypeVar, Optional, Dict, List, Annotated, Union
+from typing import Generic, Optional, Dict, List, Annotated, Union
 
 from fastapi import Depends
 from pydantic import Field
 
-from .response_model_abstract import ResponseModelAbstract
-
-T = TypeVar("T")
-
+from basalam.backbone_api.responses.response_model_abstract import ResponseModelAbstract, T
 
 class Cursor:
     @staticmethod
@@ -43,7 +40,7 @@ class CursorPaginationResponse(ResponseModelAbstract, Generic[T]):
     async def resource(cls, data: List[T], next_cursor: Dict = None) -> Dict:
         return dict(
             data=data,
-            next_cursor=cls.encode_cursor(next_cursor),
+            next_cursor=Cursor.encode_cursor(next_cursor),
         )
 
 
