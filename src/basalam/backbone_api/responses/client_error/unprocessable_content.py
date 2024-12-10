@@ -12,7 +12,6 @@ class ExtendedError(Error):
 
 class UnprocessableContentResponse(Base400Response):
     errors: List[ExtendedError]
-    data: List[dict]
 
     async def as_json_response(self) -> JSONResponse:
         return JSONResponse(
