@@ -8,11 +8,7 @@ setup(
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
     url="https://github.com/basalam/backbone-api",
-    packages=find_namespace_packages(where='src', include=[
-        'basalam.backbone_api',
-        'basalam.backbone_api.responses',
-        'basalam.backbone_api.responses.*',
-    ]),
+    packages=find_namespace_packages(where='src'),
     package_dir={'': 'src'},
     namespace_packages=["basalam"],
     classifiers=[
