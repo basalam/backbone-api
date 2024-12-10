@@ -3,9 +3,11 @@ import json
 from typing import Generic, Optional, Dict, List, Annotated, Union
 
 from fastapi import Depends
-from pydantic import Field
+from pydantic import Field, field_validator
+from starlette.responses import JSONResponse
 
 from basalam.backbone_api.responses.response_model_abstract import ResponseModelAbstract, T
+
 
 class Cursor:
     @staticmethod
@@ -36,12 +38,15 @@ class CursorPaginationResponse(ResponseModelAbstract, Generic[T]):
     data: List[T]
     next_cursor: Optional[str] = Field(None, json_schema_extra={"format": "base64"})
 
-    @classmethod
-    async def resource(cls, data: List[T], next_cursor: Dict = None) -> Dict:
-        return dict(
-            data=data,
-            next_cursor=Cursor.encode_cursor(next_cursor),
-        )
+    @field_validator('next_cursor', mode='before')
+    def check_cursor(cls, values):
+        cursor = values.get('next_cursor')
+        if cursor:
+            values['next_cursor'] = Cursor.decode_cursor(cursor)
+        return values
+
+    async def as_json_response(self) -> JSONResponse:
+        return JSONResponse(content=self.model_dump(), status_code=200)
 
 
 class CursorPaginationQueryParams:
