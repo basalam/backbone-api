@@ -12,7 +12,7 @@ class Error(BaseModel):
     fields: List[str]
 
 
-class Failure:
+class Failure(BaseModel):
     path: str
     http_status: int
     errors: List[Error]
