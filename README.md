@@ -4,7 +4,7 @@ OpenAPI request and response models
 #### Installation & Upgrade
 
 ```shell
-pip install backbone-orm
+pip install basalam.backbone-orm
 ```
 
 #### TODO List
