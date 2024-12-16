@@ -1,9 +1,9 @@
 from typing import Generic, List, Annotated, Union
 
+from basalam.backbone_api.responses.response_model_abstract import ResponseModelAbstract, T
 from fastapi import Depends
 from starlette.responses import JSONResponse
-
-from basalam.backbone_api.responses.response_model_abstract import ResponseModelAbstract, T
+from starlette.status import HTTP_200_OK
 
 
 class OffsetPaginationResponse(ResponseModelAbstract, Generic[T]):
@@ -15,7 +15,7 @@ class OffsetPaginationResponse(ResponseModelAbstract, Generic[T]):
     per_page: int
 
     async def as_json_response(self) -> JSONResponse:
-        return JSONResponse(content=self.model_dump(), status_code=200)
+        return JSONResponse(content=self.model_dump(), status_code=HTTP_200_OK)
 
 
 class OffsetPaginationQueryParams:

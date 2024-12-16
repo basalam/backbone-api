@@ -4,6 +4,7 @@ from pydantic import BaseModel
 from starlette.responses import JSONResponse
 
 from basalam.backbone_api.responses.response_model_abstract import ResponseModelAbstract, T
+from starlette.status import HTTP_207_MULTI_STATUS
 
 
 class Error(BaseModel):
@@ -25,4 +26,4 @@ class MultiStatusResponse(ResponseModelAbstract, Generic[T]):
     failure_count: int
 
     async def as_json_response(self) -> JSONResponse:
-        return JSONResponse(content=self.model_dump(), status_code=200)
+        return JSONResponse(content=self.model_dump(), status_code=HTTP_207_MULTI_STATUS)
