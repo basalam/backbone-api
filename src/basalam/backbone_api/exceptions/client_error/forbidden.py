@@ -1,14 +1,12 @@
-from api.exceptions.base import ErrorDetail, BadRequestException
+from typing import Optional
+
+from basalam.backbone_api.exceptions.client_error.base import ClientErrorException, ErrorDetail
 
 
-class ForbiddenException(BadRequestException):
-    def __init__(self, message: str = 'شما دسترسی لازم برای استفاده از این منبع را ندارید') -> None:
-        errors = [
-            ErrorDetail(
-                code=0,
-                message=message,
-                fields=None,
-                data=None
-            )
-        ]
+class ForbiddenException(ClientErrorException):
+    def __init__(self, message: str = None) -> None:
+        if message:
+            errors = ErrorDetail(message=message)
+        else:
+            errors = None
         super().__init__(http_status=403, errors=errors)

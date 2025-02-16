@@ -1,13 +1,14 @@
 from typing import Optional, List, Dict
 
-from api.exceptions.base import BadRequestException, ErrorDetail
+from basalam.backbone_api.exceptions.client_error.base import ClientErrorException, ErrorDetail
 
 
-class ConflictException(BadRequestException):
-    def __init__(self, data=Optional[List[Dict]]):
+class ConflictException(ClientErrorException):
+    def __init__(self, data: Optional[List[Dict]], message: str = None):
         errors = [
             ErrorDetail(
-                data=data
+                data=data,
+                message=message,
             )
         ]
         super().__init__(http_status=409, errors=errors)

@@ -5,6 +5,7 @@ from fastapi import HTTPException
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 from starlette.requests import Request
+from basalam.backbone_api.responses.client_error.base import Base400Response
 
 """
 This module defines the base error handling for client errors, including
@@ -54,11 +55,11 @@ class ClientErrorException(HTTPException):
         errors: A list of `ErrorDetail` objects providing specifics
                 about the error.
 
-    Methods:
-        to_response: Converts the exception to a JSON response.
     """
 
-    def __init__(self, http_status: int, errors: List[ErrorDetail]) -> None:
+    def __init__(self, http_status: int, errors: List[ErrorDetail] | None = None) -> None:
+        if errors is None:
+            errors = [ErrorDetail()]
         self.http_status = http_status
         self.errors = errors
         super().__init__(status_code=http_status, detail=self.message)
@@ -67,23 +68,6 @@ class ClientErrorException(HTTPException):
     def message(self) -> str:
         return HTTPStatus(self.http_status).phrase
 
-    def to_response(self) -> JSONResponse:
-        error = Error(
-            http_status=self.http_status,
-            message=self.message,
-            errors=self.errors
-        )
-
-        return JSONResponse(
-            status_code=self.http_status,
-            content=error.dict()
-        )
-
-
-class ClientErrorExceptionMapper:
-    def __init__(self, request: Request, exception: ClientErrorException) -> None:
-        self.__request = request
-        self.__exception = exception
-
-    async def map(self) -> JSONResponse:
-        return self.__exception.to_response()
+    @property
+    def response_data(self) -> List[ErrorDetail]:
+        return self.errors
