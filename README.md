@@ -1,3 +1,5 @@
+from basalam.backbone_api.exceptions.client_error import ForbiddenException
+
 # backbone-api
 OpenAPI request and response models
 
@@ -55,6 +57,44 @@ async def root():
 app.include_router(router)
 if __name__=="__main__":
     uvicorn.run(app, host="localhost", port=8000)
+```
+### Using Exceptions
+in app.py
+
+```python
+from fastapi import FastAPI
+from basalam.backbone_api.exceptions.client_error.handlers import client_error_exception_handler
+from basalam.backbone_api.exceptions.client_error import (
+    ClientErrorException,
+    ForbiddenException,
+    UnauthorizedException,
+    ConflictException,
+    NotFoundException,
+    UnprocessableEntityException
+)
+
+app = FastAPI()
+
+exception_handlers = {
+    ClientErrorException: client_error_exception_handler,
+    ForbiddenException: client_error_exception_handler,
+    UnauthorizedException: client_error_exception_handler,
+    ConflictException: client_error_exception_handler,
+    NotFoundException: client_error_exception_handler,
+    UnprocessableEntityException: client_error_exception_handler,
+}
+
+...
+
+```
+If you raise any of these exceptions everywhere in you FastAPI project FastAPI will return a client error response
+based on the excpetion.
+
+### Example Usage
+
+```python
+def view_or_somthing_else():
+    raise ForbiddenException()
 ```
 #### Credits
 This project was inspired by the work of [Mr.MohammadAli Soltanipoor](https://github.com/soltanipoor) on OpenAPI. 

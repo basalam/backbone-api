@@ -11,10 +11,12 @@ Modules:
     - forbidden: Defines forbidden-related error exceptions.
     - not_found: Defines not found-related error exceptions.
     - unauthorized: Defines unauthorized error exceptions.
+    - unprocessable_entity: Defines unprocessable error exceptions.
 """
 
-from basalam.backbone_api.exceptions.conflict import ConflictException
-from basalam.backbone_api.exceptions.forbidden import ForbiddenException
-from basalam.backbone_api.exceptions.not_found import NotFoundException
-from basalam.backbone_api.exceptions.unauthorized import UnauthorizedException
-from basalam.backbone_api.exceptions.base import BadRequestException, ErrorDetail, Error
+from basalam.backbone_api.exceptions.client_error.conflict import ConflictException
+from basalam.backbone_api.exceptions.client_error.forbidden import ForbiddenException
+from basalam.backbone_api.exceptions.client_error.not_found import NotFoundException
+from basalam.backbone_api.exceptions.client_error.unauthorized import UnauthorizedException
+from basalam.backbone_api.exceptions.client_error.unprocessable_entity import UnprocessableEntityException
+from basalam.backbone_api.exceptions.client_error.base import ClientErrorException, ErrorDetail, Error
