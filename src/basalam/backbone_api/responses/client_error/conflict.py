@@ -1,4 +1,4 @@
-from typing import List, Generic
+from typing import List, GenericList
 
 from starlette.responses import JSONResponse
 from starlette.status import HTTP_409_CONFLICT
