@@ -14,7 +14,7 @@ class OffsetPaginationResponse(ResponseModelAbstract, Generic[T]):
     result_count: int
     per_page: int
 
-    async def as_json_response(self) -> JSONResponse:
+    def as_json_response(self) -> JSONResponse:
         return JSONResponse(content=self.model_dump(), status_code=HTTP_200_OK)
 
 

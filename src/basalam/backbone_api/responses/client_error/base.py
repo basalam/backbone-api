@@ -9,7 +9,7 @@ from basalam.backbone_api.responses.response_model_abstract import ResponseModel
 
 class Error(BaseModel):
     code: int | None = 0
-    message: str
+    message: str | None = None
 
 
 class Base400Response(ResponseModelAbstract):
@@ -17,7 +17,7 @@ class Base400Response(ResponseModelAbstract):
     message: str
     errors: List[Error] | None
 
-    async def as_json_response(self) -> JSONResponse:
+    def as_json_response(self) -> JSONResponse:
         return JSONResponse(
             content=self.model_dump(),
             status_code=HTTP_400_BAD_REQUEST

@@ -9,5 +9,5 @@ from starlette.status import HTTP_200_OK
 class BulkResponse(ResponseModelAbstract, Generic[T]):
     data: List[T]
 
-    async def as_json_response(self) -> JSONResponse:
+    def as_json_response(self) -> JSONResponse:
         return JSONResponse(content=self.model_dump(), status_code=HTTP_200_OK)

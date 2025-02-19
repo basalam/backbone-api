@@ -13,7 +13,7 @@ class ExtendedError(Error):
 class UnprocessableContentResponse(Base400Response):
     errors: List[ExtendedError]
 
-    async def as_json_response(self) -> JSONResponse:
+    def as_json_response(self) -> JSONResponse:
         return JSONResponse(
             content=self.model_dump(),
             status_code=HTTP_422_UNPROCESSABLE_ENTITY
