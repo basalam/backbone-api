@@ -50,7 +50,7 @@ async def root():
         User(id=1, name="John Doe"),
         User(id=2, name="Jane Boe")
     ]
-    return await BulkResponse(data=ls).as_json_response()
+    return BulkResponse(data=ls).as_json_response()
 
 app.include_router(router)
 if __name__=="__main__":

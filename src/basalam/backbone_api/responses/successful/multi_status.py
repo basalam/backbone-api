@@ -25,5 +25,5 @@ class MultiStatusResponse(ResponseModelAbstract, Generic[T]):
     success_count: int
     failure_count: int
 
-    async def as_json_response(self) -> JSONResponse:
+    def as_json_response(self) -> JSONResponse:
         return JSONResponse(content=self.model_dump(), status_code=HTTP_207_MULTI_STATUS)

@@ -15,7 +15,7 @@ class ConflictResponse(Base400Response, Generic[T]):
     errors: List[ExtendedError]
     data: List[T]
 
-    async def as_json_response(self) -> JSONResponse:
+    def as_json_response(self) -> JSONResponse:
         return JSONResponse(
             content=self.model_dump(),
             status_code=HTTP_409_CONFLICT
