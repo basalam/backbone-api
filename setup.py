@@ -11,7 +11,9 @@ setup(
     packages=find_namespace_packages(where='src',
                                      include=['basalam.backbone_api',
                                               'basalam.backbone_api.responses',
-                                              'basalam.backbone_api.responses.*']),
+                                              'basalam.backbone_api.exceptions',
+                                              'basalam.backbone_api.responses.*',
+                                              'basalam.backbone_api.exceptions.*',]),
     package_dir={'': 'src'},
     classifiers=[
         "Programming Language :: Python :: 3",
