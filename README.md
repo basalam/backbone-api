@@ -1,5 +1,3 @@
-from basalam.backbone_api.exceptions.client_error import ForbiddenException
-
 # backbone-api
 OpenAPI request and response models
 
