@@ -27,8 +27,8 @@ def map_exception_to_response(exception: ClientErrorException, response_class: T
     response_data = exception.response_data
     errors = [error_class(message=data.message, code=data.code, fields=data.fields) for data in response_data]
     if is_conflict:
-        return response_class(message=exception.message, errors=errors, data=response_data[0].data).as_json_response()
-    return response_class(message=exception.message, errors=errors).as_json_response()
+        return response_class(message=exception.message, errors=errors, data=response_data[0].data, http_status=exception.http_status).as_json_response()
+    return response_class(message=exception.message, errors=errors, http_status=exception.http_status).as_json_response()
 
 
 def client_error_exception_handler(request: Request, exception: ClientErrorException):
