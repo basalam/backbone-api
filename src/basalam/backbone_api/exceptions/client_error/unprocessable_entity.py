@@ -11,4 +11,4 @@ class UnprocessableEntityException(ClientErrorException):
                 fields=fields,
             )
         ]
-        super().__init__(http_status=404, errors=errors)
+        super().__init__(http_status=422, errors=errors)
