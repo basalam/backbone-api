@@ -1,4 +1,4 @@
-from typing import List, Generic, TypeVar
+from typing import List, Generic, TypeVar, Optional
 
 from starlette.responses import JSONResponse
 from starlette.status import HTTP_409_CONFLICT
@@ -8,7 +8,7 @@ from basalam.backbone_api.responses.response_model_abstract import T
 
 
 class ExtendedError(Error):
-    fields: List[str]
+    fields: Optional[List[str]]
 
 
 class ConflictResponse(Base400Response, Generic[T]):
