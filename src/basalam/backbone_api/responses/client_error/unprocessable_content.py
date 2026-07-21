@@ -13,7 +13,7 @@ from basalam.backbone_api.responses.client_error.base import Base400Response, Er
 
 
 class ExtendedError(Error):
-    fields: List[str]
+    fields: Optional[List[str]]
 
 
 class UnprocessableContentResponse(Base400Response):
