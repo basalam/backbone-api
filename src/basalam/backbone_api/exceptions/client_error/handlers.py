@@ -1,6 +1,13 @@
 from typing import Type
 
 from starlette.requests import Request
+from basalam.backbone_api.exceptions.client_error.bad_request import BadRequestException
+from basalam.backbone_api.exceptions.client_error.payment_required import PaymentRequiredException
+from basalam.backbone_api.exceptions.client_error.too_many_requests import TooManyRequestsException
+from basalam.backbone_api.responses.client_error.bad_request import BadRequestResponse
+from basalam.backbone_api.responses.client_error.payment_required import PaymentRequiredResponse
+from basalam.backbone_api.responses.client_error.too_many_requests import TooManyRequestsResponse
+from basalam.backbone_api.responses.client_error.base import DetailedError
 
 from basalam.backbone_api.exceptions.client_error.conflict import ConflictException
 from basalam.backbone_api.exceptions.client_error.forbidden import ForbiddenException
@@ -42,7 +49,13 @@ def client_error_exception_handler(request: Request, exception: ClientErrorExcep
     Returns:
         JSONResponse: A structured JSON response with error details.
     """
-    if isinstance(exception, UnprocessableEntityException):
+    if isinstance(exception, BadRequestException):
+        return map_exception_to_response(exception, BadRequestResponse, DetailedError)
+    elif isinstance(exception, PaymentRequiredException):
+        return map_exception_to_response(exception, PaymentRequiredResponse, DetailedError)
+    elif isinstance(exception, TooManyRequestsException):
+        return map_exception_to_response(exception, TooManyRequestsResponse, DetailedError)
+    elif isinstance(exception, UnprocessableEntityException):
         return map_exception_to_response(exception, UnprocessableContentResponse, UnprocessableContentExtendedError)
     elif isinstance(exception, ConflictException):
         return map_exception_to_response(exception, ConflictResponse, ConflictExtendedError, is_conflict=True)

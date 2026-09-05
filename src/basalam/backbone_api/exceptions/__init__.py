@@ -1,5 +1,8 @@
 from basalam.backbone_api.exceptions.client_error import (
     ClientErrorException,
+    BadRequestException,
+    PaymentRequiredException,
+    TooManyRequestsException,
     UnprocessableEntityException,
     NotFoundException,
     ForbiddenException,
@@ -10,6 +13,9 @@ from basalam.backbone_api.exceptions.client_error import (
 
 __all__ = [
     "ClientErrorException",
+    "BadRequestException",
+    "PaymentRequiredException",
+    "TooManyRequestsException",
     "UnprocessableEntityException",
     "NotFoundException",
     "ForbiddenException",

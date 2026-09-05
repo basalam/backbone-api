@@ -4,9 +4,10 @@ from basalam.backbone_api.exceptions.client_error.base import ClientErrorExcepti
 
 
 class UnprocessableEntityException(ClientErrorException):
-    def __init__(self, message: str, fields: Optional[List[str]] = None) -> None:
+    def __init__(self, message: str, fields: Optional[List[str]] = None, *, code: int = 0) -> None:
         errors = [
             ErrorDetail(
+                code=code,
                 message=message,
                 fields=fields,
             )

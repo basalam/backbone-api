@@ -20,3 +20,6 @@ from basalam.backbone_api.exceptions.client_error.not_found import NotFoundExcep
 from basalam.backbone_api.exceptions.client_error.unauthorized import UnauthorizedException
 from basalam.backbone_api.exceptions.client_error.unprocessable_entity import UnprocessableEntityException
 from basalam.backbone_api.exceptions.client_error.base import ClientErrorException, ErrorDetail, Error
+from basalam.backbone_api.exceptions.client_error.bad_request import BadRequestException
+from basalam.backbone_api.exceptions.client_error.payment_required import PaymentRequiredException
+from basalam.backbone_api.exceptions.client_error.too_many_requests import TooManyRequestsException

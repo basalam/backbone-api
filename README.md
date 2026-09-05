@@ -94,5 +94,59 @@ based on the excpetion.
 def view_or_somthing_else():
     raise ForbiddenException()
 ```
+
+### Application error codes
+
+All client-error exception constructors accept the optional, keyword-only
+`code` argument. It is returned as `errors[].code` so clients can distinguish
+errors without matching message text. Existing calls default to `0`; HTTP
+statuses and response structure are unchanged.
+
+```python
+raise ForbiddenException(message="Reason is not accessible", code=40304)
+raise NotFoundException(code=40401)
+raise UnprocessableEntityException(
+    message="Campaign is required",
+    fields=["campaign_id"],
+    code=42203,
+)
+raise ConflictException(data=[{"id": 123}], code=40901)
+```
+
+Codes are chosen by the application, not assigned by this library.
+`BadRequestException` (400), `PaymentRequiredException` (402), and
+`TooManyRequestsException` (429) are also available from
+`basalam.backbone_api.exceptions` and `basalam.backbone_api.exceptions.client_error`.
+Each accepts optional `message`, `fields`, and keyword-only `code` arguments:
+
+```python
+from basalam.backbone_api.exceptions import BadRequestException, TooManyRequestsException
+
+raise BadRequestException(message="Insufficient balance", fields=["amount"], code=40001)
+raise TooManyRequestsException(code=42901)
+```
+
+Registering the same `client_error_exception_handler` handles these exceptions
+with the correct HTTP status and preserves their error fields. The corresponding
+`BadRequestResponse`, `PaymentRequiredResponse`, and `TooManyRequestsResponse`
+models are exported from `basalam.backbone_api.responses` for OpenAPI declarations.
+
+`UnauthorizedException` and the base `ClientErrorException` also accept `code`.
+For `ClientErrorException(http_status=400, code=40001)`, the code is applied to
+the default error detail. If an explicit `errors` list is supplied, its details
+and individual codes are preserved instead:
+
+```python
+from basalam.backbone_api.exceptions.client_error import ClientErrorException, ErrorDetail
+
+raise ClientErrorException(
+    http_status=422,
+    errors=[
+        ErrorDetail(code=42210, message="Field is required", fields=["amount"]),
+        ErrorDetail(code=42211, message="Invalid integer", fields=["user_id"]),
+    ],
+)
+```
+
 #### Credits
 This project was inspired by the work of [Mr.MohammadAli Soltanipoor](https://github.com/soltanipoor) on OpenAPI. 

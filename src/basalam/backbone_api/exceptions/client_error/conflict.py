@@ -4,9 +4,10 @@ from basalam.backbone_api.exceptions.client_error.base import ClientErrorExcepti
 
 
 class ConflictException(ClientErrorException):
-    def __init__(self, data: Optional[List[Dict]], message: str = None):
+    def __init__(self, data: Optional[List[Dict]], message: str = None, *, code: int = 0):
         errors = [
             ErrorDetail(
+                code=code,
                 data=data,
                 message=message,
             )

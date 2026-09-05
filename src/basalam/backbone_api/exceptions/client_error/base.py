@@ -57,9 +57,10 @@ class ClientErrorException(HTTPException):
 
     """
 
-    def __init__(self, http_status: int, errors: List[ErrorDetail] | None = None) -> None:
+    def __init__(self, http_status: int, errors: List[ErrorDetail] | None = None, *, code: int = 0) -> None:
+        """Use ``code`` for the default detail; explicit ``errors`` take precedence."""
         if errors is None:
-            errors = [ErrorDetail()]
+            errors = [ErrorDetail(code=code)]
         self.http_status = http_status
         self.errors = errors
         super().__init__(status_code=http_status, detail=self.message)

@@ -1,4 +1,4 @@
-from typing import List
+from typing import Dict, List, Optional
 
 from pydantic import BaseModel
 from starlette.responses import JSONResponse
@@ -10,6 +10,11 @@ from basalam.backbone_api.responses.response_model_abstract import ResponseModel
 class Error(BaseModel):
     code: int | None = 0
     message: str | None = None
+
+
+class DetailedError(Error):
+    fields: Optional[List[str]] = None
+    data: Optional[List[Dict]] = None
 
 
 class Base400Response(ResponseModelAbstract):
